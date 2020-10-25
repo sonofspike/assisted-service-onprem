@@ -39,3 +39,7 @@ podman run -dt --pod assisted-installer --env-file onprem-environment \
 ####################################
 podman pod rm -f assisted-installer | true
 ```
+
+References:
+- The API for the BM Assisted Installer can be found [here](https://generator.swagger.io/?url=https://raw.githubusercontent.com/openshift/assisted-service/master/swagger.yaml)
+
