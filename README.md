@@ -31,7 +31,7 @@ podman run -dt --pod assisted-installer --env-file onprem-environment \
 
 
 - The UI will available at: `http://<host-ip-address>:8080`
-- The API will available at: `http://<host-ip-address>:8090`
+- The API will available at: `http://<host-ip-address>:8090/api/assisted-install/v1/` (eg. `http://<host-ip-address>:8090/api/assisted-install/v1/clusters`)
 
 ```
 ####################################
