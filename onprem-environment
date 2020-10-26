@@ -1,4 +1,6 @@
-# File: /opt/assisted-service/onprem-environment
+########################################################################
+# file: /opt/assisted-service/onprem-environment
+########################################################################
 POSTGRESQL_DATABASE=installer
 POSTGRESQL_PASSWORD=admin
 POSTGRESQL_USER=admin
