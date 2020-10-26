@@ -14,7 +14,7 @@
 ####################################
 # Deploy Assited Installer 
 ####################################
-podman pod create --name assisted-installer -p 5432 -p 8000:8000 -p 8090:8090 -p 8080:8080
+podman pod create --name assisted-installer -p 5432:5432 -p 8000:8000 -p 8090:8090 -p 8080:8080
 
 podman run -dt --pod assisted-installer --env-file /opt/assisted-service/onprem-environment \
     --name db quay.io/ocpmetal/postgresql-12-centos7
