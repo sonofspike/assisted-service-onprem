@@ -1,7 +1,5 @@
 #!/bin/bash
 
-PWD=`pwd`
-
 echo  ####################################
 echo  # Deploy Assited Installer 
 echo  ####################################
@@ -13,19 +11,30 @@ echo  ####################################
 # - TCP/8080: Retrieve ISO
 #podman pod create --name assisted-installer -p 5432:5432 -p 8000:8000 -p 8090:8090 -p 8080:8080
 
+OAS_IMAGE=quay.io/ocpmetal/assisted-service-onprem:latest
+OAS_UI_IMAGE=quay.io/ocpmetal/ocp-metal-ui:latest
+OAS_DB_IMAGE=quay.io/ocpmetal/postgresql-12-centos7
+OAS_HOSTDIR=/opt/assisted-service
+OAS_ENV_FILE=${OAS_HOSTDIR}/onprem-environment
+
+HOST_IPS=`hostname -I | sed 'y/ /,/' | sed 's/.$//'`
+# Update onprem-environment with correct IPs
+sed -i -e "s/SERVICE_IPS.*/SERVICE_IPS=${HOST_IPS}/g" $OAS_ENV_FILE
+sed -i -e "s/SERVICE_BASE_URL.*/SERVICE_BASE_URL=http:\/\/`hostname -f`\:8090/g" $OAS_ENV_FILE
+
 podman pod create --name assisted-installer -p 8000:8000 -p 8090:8090 -p 8080:8080
 
-podman run -dt --pod assisted-installer --env-file onprem-environment \
-    --name db quay.io/ocpmetal/postgresql-12-centos7
+podman run -dt --pod assisted-installer --env-file $OAS_ENV_FILE \
+    --name db $OAS_DB_IMAGE
 
-podman run -dt --pod assisted-installer --env-file onprem-environment \
-    -v $PWD/nginx-ui.conf:/opt/bitnami/nginx/conf/server_blocks/nginx.conf:z \
+podman run -dt --pod assisted-installer --env-file $OAS_ENV_FILE \
+    -v ${OAS_HOSTDIR}/nginx-ui.conf:/opt/bitnami/nginx/conf/server_blocks/nginx.conf:z \
     --pull always \
-    --name ui quay.io/ocpmetal/ocp-metal-ui:latest
+    --name ui $OAS_UI_IMAGE
 
-podman run -dt --pod assisted-installer --env-file onprem-environment \
+podman run -dt --pod assisted-installer --env-file $OAS_ENV_FILE \
     --env DUMMY_IGNITION=False \
     --pull always \
     --user assisted-installer --restart always \
-    --name installer quay.io/ocpmetal/assisted-service-onprem:latest
+    --name installer $OAS_IMAGE
 

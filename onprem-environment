@@ -9,11 +9,31 @@ DB_PORT=5432
 DB_USER=admin
 DB_PASS=admin
 DB_NAME=installer
-#This is the IP the nodes will report to
-SERVICE_BASE_URL=http://<your-host-ip>:8090
+
+#This is the IP or name the nodes will report to
+SERVICE_BASE_URL=http://<your-host-fqdn-or-ip>:8090
 DEPLOY_TARGET=onprem
 DUMMY_IGNITION=false
-#OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/ocpmetal/ocp-release:v1.0.9.2
 OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/ocpmetal/ocp-release:latest
-# IPs for service. 
-SERVICE_IPS=<Comma separated list of IPs>
+# Host IPs service will be listening 
+SERVICE_IPS=<Comma separated list of host IPs where the service should listed>
+
+# https://github.com/openshift/assisted-test-infra/blob/master/discovery-infra/update_assisted_service_cm.py#L20
+HW_VALIDATOR_MIN_CPU_CORES=2
+HW_VALIDATOR_MIN_CPU_CORES_WORKER=2
+HW_VALIDATOR_MIN_CPU_CORES_MASTER=4
+HW_VALIDATOR_MIN_RAM_GIB=3
+HW_VALIDATOR_MIN_RAM_GIB_WORKER=3
+HW_VALIDATOR_MIN_RAM_GIB_MASTER=8
+HW_VALIDATOR_MIN_DISK_SIZE_GIB=10
+#INSTALLER_IMAGE=
+#CONTROLLER_IMAGE=
+#AGENT_DOCKER_IMAGE=
+#IGNITION_GENERATE_IMAGE=
+#BASE_DNS_DOMAINS=
+#IMAGE_BUILDER=
+#CONNECTIVITY_CHECK_IMAGE=
+#HARDWARE_INFO_IMAGE=
+#INVENTORY_IMAGE=
+#OCM_BASE_URL=
+
