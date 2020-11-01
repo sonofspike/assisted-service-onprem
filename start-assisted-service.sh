@@ -13,10 +13,12 @@ podman run -dt --pod assisted-installer --env-file onprem-environment \
 
 podman run -dt --pod assisted-installer --env-file onprem-environment \
     -v $PWD/nginx-ui.conf:/opt/bitnami/nginx/conf/server_blocks/nginx.conf:z \
+    --pull always \
     --name ui quay.io/ocpmetal/ocp-metal-ui:latest
 
 podman run -dt --pod assisted-installer --env-file onprem-environment \
     --env DUMMY_IGNITION=False \
+    --pull always \
     --user assisted-installer --restart always \
     --name installer quay.io/ocpmetal/assisted-service-onprem:latest
 
