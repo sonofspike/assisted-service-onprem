@@ -14,7 +14,15 @@
 ## Deploying Assisted Installer onprem (podman)
 
 ```
-podman pod create --name assisted-installer -p 5432:5432 -p 8000:8000 -p 8090:8090 -p 8080:8080
+# Note:
+# - TCP/5432 Postgres: There is no need to export the PostgreSQL port (5432) outside the Pod
+# - TCP/8000: UI
+# - TCP/8090: API
+# - TCP/8080: Retrieve ISO
+
+#podman pod create --name assisted-installer -p 5432:5432 -p 8000:8000 -p 8090:8090 -p 8080:8080
+
+podman pod create --name assisted-installer -p 8000:8000 -p 8090:8090 -p 8080:8080
 
 podman run -dt --pod assisted-installer --env-file /opt/assisted-service/onprem-environment \
     --name db quay.io/ocpmetal/postgresql-12-centos7
