@@ -14,33 +14,33 @@
 ## Deploying Assisted Installer onprem (podman)
 
 ```
-# Note:
-# - TCP/5432 Postgres: There is no need to export the PostgreSQL port (5432) outside the Pod
-# - TCP/8000: UI
-# - TCP/8090: API
-# - TCP/8080: Retrieve ISO
+export OAS_UI_IMAGE=quay.io/ocpmetal/ocp-metal-ui:latest
+export OAS_DB_IMAGE=quay.io/ocpmetal/postgresql-12-centos7
+export OAS_HOSTDIR=/opt/assisted-service
+export OAS_ENV_FILE=${OAS_HOSTDIR}/onprem-environment
 
-#podman pod create --name assisted-installer -p 5432:5432 -p 8000:8000 -p 8090:8090 -p 8080:8080
+podman pod create --name assisted-installer  -p 8000:8000 -p 8090:8090 -p 8888:8080
 
-podman pod create --name assisted-installer -p 8000:8000 -p 8090:8090 -p 8080:8080
+# database
+podman run -dt --pod assisted-installer --env-file $OAS_ENV_FILE \
+    --name db $OAS_DB_IMAGE
 
-podman run -dt --pod assisted-installer --env-file /opt/assisted-service/onprem-environment \
-    --name db quay.io/ocpmetal/postgresql-12-centos7
-
-podman run -dt --pod assisted-installer --env-file /opt/assisted-service/onprem-environment \
+# ui
+podman run -dt --pod assisted-installer --env-file $OAS_ENV_FILE \
+    -v ${OAS_HOSTDIR}/nginx-ui.conf:/opt/bitnami/nginx/conf/server_blocks/nginx.conf:z \
     --pull always \
-    -v /opt/assisted-service/nginx-ui.conf:/opt/bitnami/nginx/conf/server_blocks/nginx.conf:z \
-    --name ui quay.io/ocpmetal/ocp-metal-ui:latest 
+    --name ui $OAS_UI_IMAGE
 
-podman run -dt --pod assisted-installer --env-file /opt/assisted-service/onprem-environment \
+# assisted service
+podman run -dt --pod assisted-installer --env-file $OAS_ENV_FILE \
     --env DUMMY_IGNITION=False \
     --pull always \
-    --user assisted-installer  --restart always \
-    --name installer quay.io/ocpmetal/assisted-service-onprem:latest
+    --user assisted-installer --restart always \
+    --name installer $OAS_IMAGE
 ```
 Note: The `--pull always` make sure the latest version is always the one in use.
 
-- The UI will available at: `http://<host-ip-address>:8080`
+- The UI will available at: `http://<host-ip-address>:8888`
 - The API will available at: `http://<host-ip-address>:8090/api/assisted-install/v1/`
   (eg. `http://<host-ip-address>:8090/api/assisted-install/v1/clusters`)
 
