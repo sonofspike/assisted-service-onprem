@@ -21,15 +21,16 @@ OAS_DB_IMAGE=quay.io/ocpmetal/postgresql-12-centos7
 OAS_HOSTDIR=/opt/assisted-service
 OAS_ENV_FILE=${OAS_HOSTDIR}/onprem-environment
 
-PULL_SECRET=$(cat pull-secret.json)
-#SERVICE_FQDN=$(hostname -f)
-SERVICE_FQDN=bastion.ocp4poc.lab.shift.zone
+SERVICE_FQDN=$(hostname -f)
+#SERVICE_FQDN=bastion.ocp4poc.lab.shift.zone
+
+#PULL_SECRET=$(cat pull-secret.json)
 HOST_IPS=`hostname -I | sed 'y/ /,/' | sed 's/.$//'`
 
 # Update onprem-environment configuration for local deployment
+sed -i -e "s/PULL_SECRET.*/PULL_SECRET=${PULL_SECRET}/g" $OAS_ENV_FILE
 cp -f onprem-environment $OAS_ENV_FILE
 sed -i -e "s/SERVICE_IPS.*/SERVICE_IPS=${HOST_IPS}/g" $OAS_ENV_FILE
-sed -i -e "s/PULL_SECRET.*/PULL_SECRET=${PULL_SECRET}/g" $OAS_ENV_FILE
 sed -i -e "s/SERVICE_BASE_URL.*/SERVICE_BASE_URL=http:\/\/${SERVICE_FQDN}\:8090/g" $OAS_ENV_FILE
 
 # Create Pod and deploy containers
