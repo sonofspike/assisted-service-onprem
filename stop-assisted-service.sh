@@ -6,3 +6,5 @@ echo ####################################
 
 podman pod rm -f assisted-installer | true
 
+podman ps --all
+
