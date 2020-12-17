@@ -1,0 +1,277 @@
+# Generation of Kubernetes YAML is still under development!
+#
+# Save the output of this file and use kubectl create -f to import
+# it into Kubernetes.
+#
+# Created with podman-1.9.3
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: "2020-12-10T03:12:41Z"
+  labels:
+    app: assisted-installer
+  name: assisted-installer
+spec:
+  containers:
+  - command:
+    - /opt/bitnami/scripts/nginx/run.sh
+    env:
+    - name: PATH
+      value: /opt/bitnami/common/bin:/opt/bitnami/nginx/sbin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: HOSTNAME
+      value: assisted-installer
+    - name: HW_VALIDATOR_MIN_CPU_CORES_WORKER
+      value: "2"
+    - name: POSTGRESQL_DATABASE
+      value: installer
+    - name: DB_PASS
+      value: admin
+    - name: BITNAMI_IMAGE_VERSION
+      value: 1.18.0-debian-10-r200
+    - name: NGINX_HTTP_PORT_NUMBER
+    - name: OS_ARCH
+      value: amd64
+    - name: POSTGRESQL_USER
+      value: admin
+    - name: SKIP_CERT_VERIFICATION
+      value: "true"
+    - name: HOME
+      value: /
+    - name: BITNAMI_APP_NAME
+      value: nginx
+    - name: HW_VALIDATOR_MIN_DISK_SIZE_GIB
+      value: "10"
+    - name: NGINX_ENABLE_CUSTOM_PORTS
+      value: "no"
+    - name: DB_NAME
+      value: installer
+    - name: DB_HOST
+      value: 127.0.0.1
+    - name: HW_VALIDATOR_MIN_CPU_CORES_MASTER
+      value: "4"
+    - name: SERVICE_BASE_URL
+      value: http://172.16.61.40:8090
+    - name: DEPLOY_TARGET
+      value: onprem
+    - name: OS_FLAVOUR
+      value: debian-10
+    - name: HW_VALIDATOR_MIN_RAM_GIB
+      value: "3"
+    - name: HW_VALIDATOR_MIN_RAM_GIB_MASTER
+      value: "8"
+    - name: DB_PORT
+      value: "5432"
+    - name: container
+      value: podman
+    - name: DB_USER
+      value: admin
+    - name: NGINX_HTTPS_PORT_NUMBER
+    - name: HW_VALIDATOR_MIN_RAM_GIB_WORKER
+      value: "3"
+    - name: HW_VALIDATOR_MIN_CPU_CORES
+      value: "2"
+    - name: DUMMY_IGNITION
+      value: "false"
+    - name: OPENSHIFT_INSTALL_RELEASE_IMAGE
+      value: quay.io/openshift-release-dev/ocp-release:4.6.1-x86_64
+    - name: POSTGRESQL_PASSWORD
+      value: admin
+    - name: OS_NAME
+      value: linux
+    image: quay.io/ocpmetal/ocp-metal-ui:latest
+    name: ui
+    ports:
+    - containerPort: 8000
+      hostPort: 8000
+      protocol: TCP
+    - containerPort: 8090
+      hostPort: 8090
+      protocol: TCP
+    - containerPort: 8080
+      hostPort: 8888
+      protocol: TCP
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities: {}
+      privileged: false
+      readOnlyRootFilesystem: false
+      runAsGroup: 0
+      runAsUser: 1001
+      seLinuxOptions: {}
+    tty: true
+    volumeMounts:
+    - mountPath: /opt/bitnami/nginx/conf/server_blocks
+      name: nfs-folder
+    workingDir: /app
+  - command:
+    - run-postgresql
+    env:
+    - name: PATH
+      value: /opt/app-root/src/bin:/opt/app-root/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: HOSTNAME
+      value: assisted-installer
+    - name: STI_SCRIPTS_PATH
+      value: /usr/libexec/s2i
+    - name: STI_SCRIPTS_URL
+      value: image:///usr/libexec/s2i
+    - name: POSTGRESQL_DATABASE
+      value: installer
+    - name: HW_VALIDATOR_MIN_CPU_CORES
+      value: "2"
+    - name: HW_VALIDATOR_MIN_CPU_CORES_MASTER
+      value: "4"
+    - name: DB_USER
+      value: admin
+    - name: DB_PASS
+      value: admin
+    - name: POSTGRESQL_PASSWORD
+      value: admin
+    - name: PROMPT_COMMAND
+      value: . /usr/share/container-scripts/postgresql/scl_enable
+    - name: DB_PORT
+      value: "5432"
+    - name: HW_VALIDATOR_MIN_DISK_SIZE_GIB
+      value: "10"
+    - name: DUMMY_IGNITION
+      value: "false"
+    - name: HOME
+      value: /var/lib/pgsql
+    - name: POSTGRESQL_PREV_VERSION
+      value: "10"
+    - name: PGUSER
+      value: postgres
+    - name: CONTAINER_SCRIPTS_PATH
+      value: /usr/share/container-scripts/postgresql
+    - name: ENV
+      value: /usr/share/container-scripts/postgresql/scl_enable
+    - name: SUMMARY
+      value: PostgreSQL is an advanced Object-Relational database management system
+    - name: DB_HOST
+      value: 127.0.0.1
+    - name: POSTGRESQL_USER
+      value: admin
+    - name: POSTGRESQL_VERSION
+      value: "12"
+    - name: container
+      value: podman
+    - name: HW_VALIDATOR_MIN_RAM_GIB_WORKER
+      value: "3"
+    - name: DESCRIPTION
+      value: PostgreSQL is an advanced Object-Relational database management system
+        (DBMS). The image contains the client and server programs that you'll need
+        to create, run, maintain and access a PostgreSQL DBMS server.
+    - name: OPENSHIFT_INSTALL_RELEASE_IMAGE
+      value: quay.io/openshift-release-dev/ocp-release:4.6.1-x86_64
+    - name: APP_DATA
+      value: /opt/app-root
+    - name: SERVICE_BASE_URL
+      value: http://172.16.61.40:8090
+    - name: DB_NAME
+      value: installer
+    - name: HW_VALIDATOR_MIN_RAM_GIB
+      value: "3"
+    - name: BASH_ENV
+      value: /usr/share/container-scripts/postgresql/scl_enable
+    - name: SKIP_CERT_VERIFICATION
+      value: "true"
+    - name: APP_ROOT
+      value: /opt/app-root
+    - name: ENABLED_COLLECTIONS
+      value: rh-postgresql12
+    - name: PLATFORM
+      value: el7
+    - name: DEPLOY_TARGET
+      value: onprem
+    - name: HW_VALIDATOR_MIN_RAM_GIB_MASTER
+      value: "8"
+    - name: HW_VALIDATOR_MIN_CPU_CORES_WORKER
+      value: "2"
+    image: quay.io/ocpmetal/postgresql-12-centos7:latest
+    name: db
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities: {}
+      privileged: false
+      readOnlyRootFilesystem: false
+      runAsGroup: 26
+      runAsUser: 26
+      seLinuxOptions: {}
+    tty: true
+    workingDir: /opt/app-root/src
+  - command:
+    - /assisted-service
+    env:
+    - name: PATH
+      value: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    - name: TERM
+      value: xterm
+    - name: HOSTNAME
+      value: assisted-installer
+    - name: HW_VALIDATOR_MIN_DISK_SIZE_GIB
+      value: "10"
+    - name: POSTGRESQL_PASSWORD
+      value: admin
+    - name: DB_NAME
+      value: installer
+    - name: HW_VALIDATOR_MIN_CPU_CORES_MASTER
+      value: "4"
+    - name: DEPLOY_TARGET
+      value: onprem
+    - name: SKIP_CERT_VERIFICATION
+      value: "true"
+    - name: container
+      value: podman
+    - name: DB_HOST
+      value: 127.0.0.1
+    - name: OPENSHIFT_INSTALL_RELEASE_IMAGE
+      value: quay.io/openshift-release-dev/ocp-release:4.6.1-x86_64
+    - name: HW_VALIDATOR_MIN_CPU_CORES
+      value: "2"
+    - name: HW_VALIDATOR_MIN_CPU_CORES_WORKER
+      value: "2"
+    - name: HW_VALIDATOR_MIN_RAM_GIB
+      value: "3"
+    - name: HW_VALIDATOR_MIN_RAM_GIB_MASTER
+      value: "8"
+    - name: DB_PASS
+      value: admin
+    - name: SERVICE_BASE_URL
+      value: http://172.16.61.40:8090
+    - name: POSTGRESQL_USER
+      value: admin
+    - name: HW_VALIDATOR_MIN_RAM_GIB_WORKER
+      value: "3"
+    - name: DUMMY_IGNITION
+      value: "False"
+    - name: DB_USER
+      value: admin
+    - name: POSTGRESQL_DATABASE
+      value: installer
+    - name: DB_PORT
+      value: "5432"
+    image: quay.io/ocpmetal/assisted-service:latest
+    name: installer
+    resources: {}
+    securityContext:
+      allowPrivilegeEscalation: true
+      capabilities: {}
+      privileged: false
+      readOnlyRootFilesystem: false
+      seLinuxOptions: {}
+    tty: true
+    volumeMounts:
+    - mountPath: /data/
+      name: nfs-folder
+    workingDir: /
+  volumes:
+  - nfs:
+      path: /opt/assisted-service
+      server: 172.16.61.40
+    name: nfs-folder
+status: {}
