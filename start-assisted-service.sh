@@ -16,7 +16,7 @@ else
     OAS_IMAGE=quay.io/eranco74/bm-inventory:onprem_single_node
 fi
 
-RHCOS_VERSION="4.6.1"
+RHCOS_VERSION="4.6.8"
 BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/${RHCOS_VERSION}/rhcos-${RHCOS_VERSION}-x86_64-live.x86_64.iso
 
 OAS_UI_IMAGE=quay.io/ocpmetal/ocp-metal-ui:latest

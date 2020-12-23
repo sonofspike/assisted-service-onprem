@@ -17,7 +17,8 @@ DEPLOY_TARGET=onprem
 DUMMY_IGNITION=false
 
 #OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/ocpmetal/ocp-release:latest
-OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:4.6.1-x86_64
+OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:4.6.8-x86_64
+OPENSHIFT_VERSIONS={"4.6":{"release_image":"quay.io/openshift-release-dev/ocp-release:4.6.8-x86_64"},"4.7":{"release_image":"quay.io/openshift-release-dev/ocp-release@sha256:2419f9cd3ea9bd114764855653012e305ade2527210d332bfdd6dbdae538bd66"}}
 
 # Host IPs service will be listening 
 #SERVICE_IPS=<Comma separated list of host IPs where the service should listed>
