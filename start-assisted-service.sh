@@ -11,20 +11,20 @@ echo  ####################################
 # - TCP/8888: UI
 
 if [[ "$1" != "single" ]]; then
-    OAS_IMAGE=quay.io/ocpmetal/assisted-service:latest
+    OAS_IMAGE=quay.io/ocpmetal/assisted-service:stable
 else
     OAS_IMAGE=quay.io/eranco74/bm-inventory:onprem_single_node
 fi
 
-RHCOS_VERSION="4.6.1"
-BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/${RHCOS_VERSION}/rhcos-${RHCOS_VERSION}-x86_64-live.x86_64.iso
+RHCOS_VERSION="latest"
+BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/${RHCOS_VERSION}/rhcos-live.x86_64.iso
 
 OAS_UI_IMAGE=quay.io/ocpmetal/ocp-metal-ui:latest
 OAS_DB_IMAGE=quay.io/ocpmetal/postgresql-12-centos7
 OAS_HOSTDIR=/opt/assisted-service
 OAS_ENV_FILE=${OAS_HOSTDIR}/onprem-environment
 OAS_UI_CONF=${OAS_HOSTDIR}/nginx-ui.conf
-OAS_LIVE_CD=${OAS_HOSTDIR}/rhcos-${RHCOS_VERSION}-live.x86_64.iso
+OAS_LIVE_CD=${OAS_HOSTDIR}/rhcos-live.x86_64.iso
 OAS_COREOS_INSTALLER=${OAS_HOSTDIR}/coreos-installer
 
 SERVICE_FQDN=$(hostname -f)
@@ -51,7 +51,7 @@ if [[ ! -f $OAS_COREOS_INSTALLER ]]; then
         -v ${OAS_HOSTDIR}:/data \
         -w /data \
         --entrypoint /bin/bash \
-        quay.io/coreos/coreos-installer:v0.7.0 \
+        quay.io/coreos/coreos-installer:release \
         -c 'cp /usr/sbin/coreos-installer /data/coreos-installer'
 fi
 
