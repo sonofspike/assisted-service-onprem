@@ -55,12 +55,18 @@ if [[ ! -f $OAS_COREOS_INSTALLER ]]; then
         -c 'cp /usr/sbin/coreos-installer /data/coreos-installer'
 fi
 
+# Prepare for persistence
+# NOTE: Make sure to delete this directory if persistence is not desired for a new environment!
+mkdir -p ${OAS_HOSTDIR}/data/postgresql
+chown -R 26 ${OAS_HOSTDIR}/data/postgresql/
+
 # Create Pod and deploy containers
 #podman pod create --name assisted-installer -p 5432:5432 -p 8000:8000 -p 8090:8090 -p 8888:8080
 podman pod create --name assisted-installer  -p 8000:8000 -p 8090:8090 -p 8888:8080
 
 # database
 podman run -dt --pod assisted-installer --env-file $OAS_ENV_FILE \
+    --volume ${OAS_HOSTDIR}/data/postgresql:/var/lib/pgsql:z \
     --name db $OAS_DB_IMAGE
 
 # ui
