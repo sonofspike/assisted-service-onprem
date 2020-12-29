@@ -16,6 +16,7 @@ else
     OAS_IMAGE=quay.io/eranco74/bm-inventory:onprem_single_node
 fi
 
+########################################################################
 RHCOS_VERSION="latest"
 BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/${RHCOS_VERSION}/rhcos-live.x86_64.iso
 
@@ -26,6 +27,7 @@ OAS_ENV_FILE=${OAS_HOSTDIR}/onprem-environment
 OAS_UI_CONF=${OAS_HOSTDIR}/nginx-ui.conf
 OAS_LIVE_CD=${OAS_HOSTDIR}/rhcos-live.x86_64.iso
 OAS_COREOS_INSTALLER=${OAS_HOSTDIR}/coreos-installer
+########################################################################
 
 SERVICE_FQDN=$(hostname -f)
 
@@ -41,17 +43,17 @@ cp -f nginx-ui.conf $OAS_UI_CONF
 
 # Download RHCOS live CD
 if [[ ! -f $OAS_LIVE_CD ]]; then
-    echo downloading RHCOS live CD from $BASE_OS_IMAGE
-    curl $BASE_OS_IMAGE -o $OAS_LIVE_CD
+    echo "Base Live ISO not found. Downloading RHCOS live CD from $BASE_OS_IMAGE"
+    curl -L $BASE_OS_IMAGE -o $OAS_LIVE_CD
 fi
 
 # Download RHCOS installer
 if [[ ! -f $OAS_COREOS_INSTALLER ]]; then
-    podman run --privileged --pull=always -it --rm \
+    podman run --privileged -it --rm \
         -v ${OAS_HOSTDIR}:/data \
         -w /data \
         --entrypoint /bin/bash \
-        quay.io/coreos/coreos-installer:release \
+        quay.io/coreos/coreos-installer:v0.7.0 \
         -c 'cp /usr/sbin/coreos-installer /data/coreos-installer'
 fi
 
@@ -72,7 +74,6 @@ podman run -dt --pod assisted-installer --env-file $OAS_ENV_FILE \
 # ui
 podman run -dt --pod assisted-installer --env-file $OAS_ENV_FILE \
     -v ${OAS_HOSTDIR}/nginx-ui.conf:/opt/bitnami/nginx/conf/server_blocks/nginx.conf:z \
-    --pull always \
     --name ui $OAS_UI_IMAGE
 
 # assisted service
@@ -81,10 +82,9 @@ podman run -dt --pod assisted-installer \
     -v ${OAS_COREOS_INSTALLER}:/data/coreos-installer:z \
     --env-file $OAS_ENV_FILE \
     --env DUMMY_IGNITION=False \
-    --pull always \
-    --restart always \
     --name installer $OAS_IMAGE
 
+echo "Check if service is running..."
 podman pod ps
 podman ps
 #

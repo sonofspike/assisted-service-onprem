@@ -1,6 +1,20 @@
 ########################################################################
 # file: /opt/assisted-service/onprem-environment
 ########################################################################
+#This is the IP or name with the API the OCP discovery agent will callback
+SERVICE_BASE_URL=http://10.198.6.70:8090
+
+###############################
+# NO NEED TO UPDATE AFTER THIS
+###############################
+# Host IPs service will be listening 
+#SERVICE_IPS=<Comma separated list of host IPs where the service should listed>
+
+# Required when using self-signed certifications or no certificates
+SKIP_CERT_VERIFICATION=true
+
+DEPLOY_TARGET=onprem
+DUMMY_IGNITION=false
 POSTGRESQL_DATABASE=installer
 POSTGRESQL_PASSWORD=admin
 POSTGRESQL_USER=admin
@@ -10,21 +24,9 @@ DB_USER=admin
 DB_PASS=admin
 DB_NAME=installer
 
-#This is the IP or name the nodes will report to
-#SERVICE_BASE_URL=http://<your-host-fqdn-or-ip>:8090
-SERVICE_BASE_URL=http://10.198.6.70:8090
-DEPLOY_TARGET=onprem
-DUMMY_IGNITION=false
-
 #OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/ocpmetal/ocp-release:latest
-OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:4.6.8-x86_64
-OPENSHIFT_VERSIONS={"4.6":{"release_image":"quay.io/openshift-release-dev/ocp-release:4.6.8-x86_64"},"4.7":{"release_image":"quay.io/openshift-release-dev/ocp-release@sha256:2419f9cd3ea9bd114764855653012e305ade2527210d332bfdd6dbdae538bd66"}}
-
-# Host IPs service will be listening 
-#SERVICE_IPS=<Comma separated list of host IPs where the service should listed>
-
-# Required when using self-signed certifications or no certificates
-SKIP_CERT_VERIFICATION=true
+OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:4.6.9-x86_64
+OPENSHIFT_VERSIONS={"4.6":{"release_image":"quay.io/openshift-release-dev/ocp-release:4.6.9-x86_64"},"4.7":{"release_image":"quay.io/openshift-release-dev/ocp-release@sha256:2419f9cd3ea9bd114764855653012e305ade2527210d332bfdd6dbdae538bd66"}}
 
 # https://github.com/openshift/assisted-test-infra/blob/master/discovery-infra/update_assisted_service_cm.py#L20
 HW_VALIDATOR_MIN_CPU_CORES=2
@@ -34,13 +36,6 @@ HW_VALIDATOR_MIN_RAM_GIB=3
 HW_VALIDATOR_MIN_RAM_GIB_WORKER=3
 HW_VALIDATOR_MIN_RAM_GIB_MASTER=8
 HW_VALIDATOR_MIN_DISK_SIZE_GIB=10
-
-#####################################################################################
-########  Single Node deployment
-# Need to be uncommented for single node cluster
-#INSTALLER_IMAGE=quay.io/eranco74/assisted-installer:single_node_onprem
-#CONTROLLER_IMAGE=quay.io/eranco74/assisted-installer-controller:single_node_onprem
-#####################################################################################
 
 #PULL_SECRET_TOKEN=
 #PULL_SECRET=
@@ -53,3 +48,9 @@ HW_VALIDATOR_MIN_DISK_SIZE_GIB=10
 #INVENTORY_IMAGE=
 #OCM_BASE_URL=
 
+#####################################################################################
+##  Experimental: Single Node deployment
+# Need to be uncommented for single node cluster
+#INSTALLER_IMAGE=quay.io/eranco74/assisted-installer:single_node_onprem
+#CONTROLLER_IMAGE=quay.io/eranco74/assisted-installer-controller:single_node_onprem
+#####################################################################################
