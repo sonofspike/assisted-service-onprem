@@ -1,23 +1,24 @@
 #!/bin/bash
 
 echo  ####################################
-echo  # Deploy Assited Installer 
+echo  # Deploy Assited Installer
 echo  ####################################
 
 # Note:
 # - TCP/5432 Postgres: There is no need to export the PostgreSQL port (5432) outside the Pod
-# - TCP/8000: 
+# - TCP/8000:
 # - TCP/8090: API
 # - TCP/8888: UI
 
 if [[ "$1" != "single" ]]; then
-    OAS_IMAGE=quay.io/ocpmetal/assisted-service:stable
+    #OAS_IMAGE=quay.io/ocpmetal/assisted-service:stable
+    OAS_IMAGE=quay.io/ocpmetal/assisted-service:stable-candidate.11.01.2021-15.13
 else
     OAS_IMAGE=quay.io/eranco74/bm-inventory:onprem_single_node
 fi
 
 ########################################################################
-RHCOS_VERSION="latest"
+RHCOS_VERSION="4.6.8"
 BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/${RHCOS_VERSION}/rhcos-live.x86_64.iso
 
 OAS_UI_IMAGE=quay.io/ocpmetal/ocp-metal-ui:latest

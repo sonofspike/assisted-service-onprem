@@ -7,6 +7,7 @@
 ```
 
 ## Dependencies
+- Requires [podman](https://podman.io/)
 
 - Create and update required configuration files:
   - [`/opt/assisted-service/onprem-environment`](./onprem-environment)
@@ -15,17 +16,17 @@
 ## Running Assisted Service
 
 - To start the assisted service
-  
+
   ```bash
   ./start-assisted-service.sh
   ```
 
 - To stop the assisted service
-  
+
   ```bash
   ./stop-assisted-service.sh
   ```
-  
+
 ## Using Assisted Service
 
 - The UI will available at: `http://<host-ip-address>:8888`

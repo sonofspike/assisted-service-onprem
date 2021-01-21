@@ -7,7 +7,7 @@ SERVICE_BASE_URL=http://10.198.6.70:8090
 ###############################
 # NO NEED TO UPDATE AFTER THIS
 ###############################
-# Host IPs service will be listening 
+# Host IPs service will be listening
 #SERVICE_IPS=<Comma separated list of host IPs where the service should listed>
 
 # Required when using self-signed certifications or no certificates
@@ -24,9 +24,9 @@ DB_USER=admin
 DB_PASS=admin
 DB_NAME=installer
 
-#OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/ocpmetal/ocp-release:latest
-OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:4.6.9-x86_64
-OPENSHIFT_VERSIONS={"4.6":{"release_image":"quay.io/openshift-release-dev/ocp-release:4.6.9-x86_64"},"4.7":{"release_image":"quay.io/openshift-release-dev/ocp-release@sha256:2419f9cd3ea9bd114764855653012e305ade2527210d332bfdd6dbdae538bd66"}}
+#OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release:4.6.8-x86_64
+OPENSHIFT_INSTALL_RELEASE_IMAGE=quay.io/openshift-release-dev/ocp-release@sha256:6ddbf56b7f9776c0498f23a54b65a06b3b846c1012200c5609c4bb716b6bdcdf
+OPENSHIFT_VERSIONS={"4.6":{"release_image":"quay.io/openshift-release-dev/ocp-release@sha256:6ddbf56b7f9776c0498f23a54b65a06b3b846c1012200c5609c4bb716b6bdcdf"},"4.7":{"release_image":"quay.io/openshift-release-dev/ocp-release@sha256:2419f9cd3ea9bd114764855653012e305ade2527210d332bfdd6dbdae538bd66"}}
 
 # Uncomment to avoid pull-secret requirement for quay.io on Air-gapped deployments
 #PUBLIC_CONTAINER_REGISTRIES=quay.io,registry.access.redhat.com,registry.redhat.io
