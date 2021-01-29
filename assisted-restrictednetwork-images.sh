@@ -17,3 +17,7 @@ do
    oc -a $PULL_SECRET_JSON image mirror quay.io/ocpmetal/$IMAGE:latest $LOCAL_REGISTRY/ocpmetal/$IMAGE:latest --insecure=true
    echo "Pushed to $LOCAL_REGISTRY/ocpmetal/$IMAGE:latest"
 done
+
+echo ""
+echo "Ensure that the onprem-environment file, in this directory, contains the proper digest for the assisted-installer-controller."
+echo "This should be `skopeo inspect docker://quay.io/ocpmetal/assisted-installer-controller:latest | jq .Digest`"

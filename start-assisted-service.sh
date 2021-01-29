@@ -17,7 +17,7 @@ else
 fi
 
 ########################################################################
-RHCOS_VERSION="4.6.8"
+RHCOS_VERSION="latest"
 BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/${RHCOS_VERSION}/rhcos-live.x86_64.iso
 
 OAS_UI_IMAGE=quay.io/ocpmetal/ocp-metal-ui:latest
