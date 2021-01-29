@@ -1,9 +1,9 @@
 # OpenShift Assisted Service onprem
 
 ```bash
-########################################################################
-# A PRESCRIPTIVE DEPLOYMENT OF OPENSHIFT ASSISTED INSTALLER ON PREM
-########################################################################
+#####################################################################
+# A PRESCRIPTIVE DEPLOYMENT OF OPENSHIFT ASSISTED INSTALLER ON PREM #
+#####################################################################
 ```
 
 ## Dependencies
