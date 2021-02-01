@@ -1,17 +1,22 @@
-# Assisted Service onprem
+# OpenShift Assisted Service onprem
 
 ```bash
-########################################################################
-# A PRESCRIPTIVE ONPREMISE DEPLOYMENT OF ASSISTED INSTALLER FOR LABS
-########################################################################
+#####################################################################
+# A PRESCRIPTIVE DEPLOYMENT OF OPENSHIFT ASSISTED INSTALLER ON PREM #
+#####################################################################
 ```
 
 ## Dependencies
 - Requires [podman](https://podman.io/)
+- Requires [skopeo](https://github.com/containers/skopeo) - restricted network installs
 
 - Create and update required configuration files:
   - [`/opt/assisted-service/onprem-environment`](./onprem-environment)
   - [`/opt/assisted-service/nginx-ui.conf`](./nginx-ui.conf)
+
+## Restricted Network installs
+- Be sure to mirror required images for the OpenShift Assisted Service if installing on a network that cannot access `quay.io` or `registry.redhat.io` directly.
+- `assisted-restrictednetwork-images.sh` is provided to assist with this task.
 
 ## Running Assisted Service
 
