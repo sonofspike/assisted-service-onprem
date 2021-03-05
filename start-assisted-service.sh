@@ -11,7 +11,8 @@ echo  ####################################
 # - TCP/8888: UI
 
 if [[ "$1" != "single" ]]; then
-    OAS_IMAGE=quay.io/ocpmetal/assisted-service:stable
+#    OAS_IMAGE=quay.io/ocpmetal/assisted-service:stable
+    OAS_IMAGE=quay.io/ocpmetal/assisted-service:v1.0.16.2
 else
     OAS_IMAGE=quay.io/eranco74/bm-inventory:onprem_single_node
 fi
