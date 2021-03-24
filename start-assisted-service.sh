@@ -10,19 +10,15 @@ echo  ####################################
 # - TCP/8090: API
 # - TCP/8888: UI
 
-if [[ "$1" != "single" ]]; then
-#    OAS_IMAGE=quay.io/ocpmetal/assisted-service:stable
-    OAS_IMAGE=quay.io/ocpmetal/assisted-service:v1.0.16.2
-else
-    OAS_IMAGE=quay.io/eranco74/bm-inventory:onprem_single_node
-fi
-
 ########################################################################
 RHCOS_VERSION="latest"
 BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/${RHCOS_VERSION}/rhcos-live.x86_64.iso
 
 OAS_UI_IMAGE=quay.io/ocpmetal/ocp-metal-ui:latest
 OAS_DB_IMAGE=quay.io/ocpmetal/postgresql-12-centos7
+OAS_IMAGE=quay.io/ocpmetal/assisted-service:stable
+COREOS_INSTALLER=quay.io/coreos/coreos-installer:v0.7.0
+
 OAS_HOSTDIR=/opt/assisted-service
 OAS_ENV_FILE=${OAS_HOSTDIR}/onprem-environment
 OAS_UI_CONF=${OAS_HOSTDIR}/nginx-ui.conf
@@ -32,14 +28,16 @@ OAS_COREOS_INSTALLER=${OAS_HOSTDIR}/coreos-installer
 
 SERVICE_FQDN=$(hostname -f)
 
-#PULL_SECRET=$(cat pull-secret.json)
-HOST_IPS=`hostname -I | sed 'y/ /,/' | sed 's/.$//'`
-
 # Update onprem-environment configuration for local deployment
 cp -f onprem-environment $OAS_ENV_FILE
-sed -i -e "s/PULL_SECRET.*/PULL_SECRET=${PULL_SECRET}/g" $OAS_ENV_FILE
-sed -i -e "s/SERVICE_IPS.*/SERVICE_IPS=${HOST_IPS}/g" $OAS_ENV_FILE
+
+#PULL_SECRET=$(cat pull-secret.json)
+#sed -i -e "s/PULL_SECRET.*/PULL_SECRET=${PULL_SECRET}/g" $OAS_ENV_FILE
+
+#HOST_IPS=`hostname -I | sed 'y/ /,/' | sed 's/.$//'`
+#sed -i -e "s/SERVICE_IPS.*/SERVICE_IPS=${HOST_IPS}/g" $OAS_ENV_FILE
 #sed -i -e "s/SERVICE_BASE_URL.*/SERVICE_BASE_URL=http:\/\/${SERVICE_FQDN}\:8090/g" $OAS_ENV_FILE
+
 cp -f nginx-ui.conf $OAS_UI_CONF
 
 # Download RHCOS live CD
@@ -54,7 +52,7 @@ if [[ ! -f $OAS_COREOS_INSTALLER ]]; then
         -v ${OAS_HOSTDIR}:/data \
         -w /data \
         --entrypoint /bin/bash \
-        quay.io/coreos/coreos-installer:v0.7.0 \
+        ${COREOS_INSTALLER} \
         -c 'cp /usr/sbin/coreos-installer /data/coreos-installer'
 fi
 
@@ -83,6 +81,7 @@ podman run -dt --pod assisted-installer \
     -v ${OAS_COREOS_INSTALLER}:/data/coreos-installer:z \
     --env-file $OAS_ENV_FILE \
     --env DUMMY_IGNITION=False \
+    --restart always \
     --name installer $OAS_IMAGE
 
 echo "Check if service is running..."
