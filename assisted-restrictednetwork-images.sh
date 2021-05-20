@@ -10,7 +10,7 @@ LOCAL_REGISTRY="yourregistry.fqdn:5000"
 PULL_SECRET_JSON=../../pull-secret-full.json
 
 IMAGE="coreos-installer"
-oc -a $PULL_SECRET_JSON image mirror quay.io/coreos/$IMAGE:v0.7.0 $LOCAL_REGISTRY/coreos/$IMAGE:v0.7.0 --insecure=true
+oc -a $PULL_SECRET_JSON image mirror quay.io/coreos/$IMAGE:v0.9.1 $LOCAL_REGISTRY/coreos/$IMAGE:v0.9.1 --insecure=true
 
 for IMAGE in postgresql-12-centos7 ocp-metal-ui agent assisted-installer-agent assisted-iso-create assisted-installer assisted-installer-controller assisted-service
 do
