@@ -12,12 +12,17 @@ echo  ####################################
 
 ########################################################################
 RHCOS_VERSION="latest"
-BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/${RHCOS_VERSION}/rhcos-live.x86_64.iso
+
+# BASE_OS_IMAGE matches current release, which is 4.7.x
+BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.7/${RHCOS_VERSION}/rhcos-live.x86_64.iso
+
+# For 4.8.0-fc.3 SNO deployments, replace BASE_OS_IMAGE with the following URL:
+# BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/amd64/dependencies/rhcos/pre-release/latest-4.8/rhcos-4.8.0-fc.4-x86_64-live.x86_64.iso
 
 OAS_UI_IMAGE=quay.io/ocpmetal/ocp-metal-ui:latest
 OAS_DB_IMAGE=quay.io/ocpmetal/postgresql-12-centos7
-OAS_IMAGE=quay.io/ocpmetal/assisted-service:stable
-COREOS_INSTALLER=quay.io/coreos/coreos-installer:v0.7.0
+OAS_IMAGE=quay.io/ocpmetal/assisted-service:latest
+COREOS_INSTALLER=quay.io/coreos/coreos-installer:v0.9.1
 
 OAS_HOSTDIR=/opt/assisted-service
 OAS_ENV_FILE=${OAS_HOSTDIR}/onprem-environment

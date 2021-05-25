@@ -39,14 +39,8 @@ OPENSHIFT_VERSIONS={"4.6":{"display_name":"4.6.16","release_version":"4.6.16","r
 # Uncomment to avoid pull-secret requirement for quay.io on restricted network installs
 #PUBLIC_CONTAINER_REGISTRIES=quay.io,registry.access.redhat.com,registry.redhat.io
 
-# https://github.com/openshift/assisted-test-infra/blob/master/discovery-infra/update_assisted_service_cm.py#L20
-HW_VALIDATOR_MIN_CPU_CORES=4
-HW_VALIDATOR_MIN_CPU_CORES_WORKER=4
-HW_VALIDATOR_MIN_CPU_CORES_MASTER=4
-HW_VALIDATOR_MIN_RAM_GIB=4
-HW_VALIDATOR_MIN_RAM_GIB_WORKER=4
-HW_VALIDATOR_MIN_RAM_GIB_MASTER=6
-HW_VALIDATOR_MIN_DISK_SIZE_GIB=20
+# Format has changed for HW validation (Link: https://github.com/openshift/assisted-service/blob/master/onprem-environment#L19)
+HW_VALIDATOR_REQUIREMENTS=[{"version":"default","master":{"cpu_cores":4,"ram_mib":6144,"disk_size_gb":20,"installation_disk_speed_threshold_ms":10},"worker":{"cpu_cores":4,"ram_mib":4096,"disk_size_gb":20,"installation_disk_speed_threshold_ms":10}}]
 
 #PULL_SECRET_TOKEN=
 #PULL_SECRET=
@@ -59,7 +53,8 @@ HW_VALIDATOR_MIN_DISK_SIZE_GIB=20
 #INVENTORY_IMAGE=
 #OCM_BASE_URL=
 
-#ENABLE_SINGLE_NODE_DNSMASQ=true
+# Enabled for SNO Deployments (Link: https://github.com/openshift/assisted-service/blob/master/onprem-environment#L14)
+ENABLE_SINGLE_NODE_DNSMASQ=true
 
 #####################################################################################
 ##  Experimental: Single Node deployment
