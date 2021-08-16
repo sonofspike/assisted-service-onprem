@@ -21,7 +21,7 @@ BASE_OS_IMAGE=https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4
 
 OAS_UI_IMAGE=quay.io/ocpmetal/ocp-metal-ui:latest
 OAS_DB_IMAGE=quay.io/ocpmetal/postgresql-12-centos7
-OAS_IMAGE=quay.io/ocpmetal/assisted-service:latest
+OAS_IMAGE="${OAS_IMAGE:-quay.io/ocpmetal/assisted-service:latest}"
 COREOS_INSTALLER=quay.io/coreos/coreos-installer:v0.9.1
 
 OAS_HOSTDIR=/opt/assisted-service
