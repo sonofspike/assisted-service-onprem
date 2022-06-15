@@ -1,5 +1,16 @@
 # OpenShift Assisted Service onprem
 
+---
+
+```bash
+#####################################################################
+# WARNING: THIS REPO IS NO LONGER MAINTAINED 
+#####################################################################
+```
+Consider using upstream repo https://github.com/openshift/assisted-service/tree/master/deploy/podman 
+
+---
+
 ```bash
 #####################################################################
 # A PRESCRIPTIVE DEPLOYMENT OF OPENSHIFT ASSISTED INSTALLER ON PREM #
